@@ -14,9 +14,11 @@ import { ChartPoint } from "@/lib/types";
 export default function WeeklyChart({
   points,
   unit,
+  color = "#171717",
 }: {
   points: ChartPoint[];
   unit: string;
+  color?: string;
 }) {
   return (
     <div className="h-48 w-full">
@@ -32,9 +34,9 @@ export default function WeeklyChart({
           <Line
             type="monotone"
             dataKey="total"
-            stroke="#171717"
+            stroke={color}
             strokeWidth={2}
-            dot={{ r: 3, fill: "#171717" }}
+            dot={{ r: 3, fill: color }}
             activeDot={{ r: 6 }}
           />
         </LineChart>

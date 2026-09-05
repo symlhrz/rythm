@@ -120,6 +120,7 @@ export async function GET(req: Request) {
       name: activity.name,
       unit: activity.unit,
       description: activity.description,
+      color: activity.color,
       points,
       periodTotal,
       lastDoneDate: lastEntry ? lastEntry.date : null,

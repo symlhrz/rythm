@@ -132,7 +132,13 @@ export default function DashboardPage() {
           >
             <div className="flex items-start justify-between">
               <div>
-                <h2 className="font-semibold">{activity.name}</h2>
+                <div className="flex items-center gap-2">
+                  <span
+                    className="h-3 w-3 rounded-full shrink-0"
+                    style={{ backgroundColor: activity.color }}
+                  />
+                  <h2 className="font-semibold">{activity.name}</h2>
+                </div>
                 {activity.description && (
                   <p className="text-sm text-neutral-600">
                     {activity.description}
@@ -151,7 +157,11 @@ export default function DashboardPage() {
                 </p>
               </div>
             </div>
-            <WeeklyChart points={activity.points} unit={activity.unit} />
+            <WeeklyChart
+              points={activity.points}
+              unit={activity.unit}
+              color={activity.color}
+            />
           </div>
         ))}
     </div>

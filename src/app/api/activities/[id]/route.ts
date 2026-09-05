@@ -3,6 +3,9 @@ import { db } from "@/db";
 import { activities } from "@/db/schema";
 import { eq } from "drizzle-orm";
 
+const HEX_COLOR = /^#[0-9a-fA-F]{6}$/;
+const DEFAULT_COLOR = "#171717";
+
 export async function PATCH(
   req: Request,
   { params }: { params: Promise<{ id: string }> }
@@ -12,6 +15,7 @@ export async function PATCH(
   const name = (body.name ?? "").trim();
   const unit = (body.unit ?? "").trim();
   const description = (body.description ?? "").trim();
+  const color = (body.color ?? "").trim();
 
   if (!name || !unit) {
     return NextResponse.json(
@@ -22,7 +26,12 @@ export async function PATCH(
 
   const [updated] = await db
     .update(activities)
-    .set({ name, unit, description: description || null })
+    .set({
+      name,
+      unit,
+      description: description || null,
+      color: HEX_COLOR.test(color) ? color : DEFAULT_COLOR,
+    })
     .where(eq(activities.id, Number(id)))
     .returning();
 

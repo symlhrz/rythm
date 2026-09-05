@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Activity } from "@/lib/types";
 import { todayStr } from "@/lib/date-helpers";
+import ColorSwatchPicker from "@/components/ColorSwatchPicker";
+
+const DEFAULT_COLOR = "#171717";
 
 export default function LogEntryPage() {
   const router = useRouter();
@@ -16,6 +19,7 @@ export default function LogEntryPage() {
   const [newName, setNewName] = useState("");
   const [newUnit, setNewUnit] = useState("");
   const [newDescription, setNewDescription] = useState("");
+  const [newColor, setNewColor] = useState(DEFAULT_COLOR);
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -25,6 +29,7 @@ export default function LogEntryPage() {
   const [editName, setEditName] = useState("");
   const [editUnit, setEditUnit] = useState("");
   const [editDescription, setEditDescription] = useState("");
+  const [editColor, setEditColor] = useState(DEFAULT_COLOR);
   const [manageError, setManageError] = useState("");
 
   function loadActivities() {
@@ -59,6 +64,7 @@ export default function LogEntryPage() {
         name: newName,
         unit: newUnit,
         description: newDescription,
+        color: newColor,
       }),
     });
     if (!res.ok) {
@@ -70,6 +76,7 @@ export default function LogEntryPage() {
     setNewName("");
     setNewUnit("");
     setNewDescription("");
+    setNewColor(DEFAULT_COLOR);
     setShowNewActivity(false);
     setActivities((prev) => [...prev, created]);
     setActivityId(String(created.id));
@@ -119,6 +126,7 @@ export default function LogEntryPage() {
     setEditName(activity.name);
     setEditUnit(activity.unit);
     setEditDescription(activity.description ?? "");
+    setEditColor(activity.color || DEFAULT_COLOR);
     setManageError("");
   }
 
@@ -140,6 +148,7 @@ export default function LogEntryPage() {
         name: editName,
         unit: editUnit,
         description: editDescription,
+        color: editColor,
       }),
     });
     if (!res.ok) {
@@ -189,10 +198,18 @@ export default function LogEntryPage() {
                 </option>
               ))}
             </select>
-            {selectedActivity?.description && (
-              <p className="text-sm text-neutral-500 mt-1">
-                {selectedActivity.description}
-              </p>
+            {selectedActivity && (
+              <div className="flex items-center gap-2 mt-2">
+                <span
+                  className="h-3 w-3 rounded-full shrink-0"
+                  style={{ backgroundColor: selectedActivity.color }}
+                />
+                {selectedActivity.description && (
+                  <p className="text-sm text-neutral-500">
+                    {selectedActivity.description}
+                  </p>
+                )}
+              </div>
             )}
             <div className="flex gap-4 mt-2">
               <button
@@ -254,6 +271,12 @@ export default function LogEntryPage() {
                         className="w-full border rounded-lg px-3 py-1.5 text-sm"
                       />
                     </div>
+                    <div>
+                      <label className="block text-xs font-medium mb-1">
+                        Color
+                      </label>
+                      <ColorSwatchPicker value={editColor} onChange={setEditColor} />
+                    </div>
                     <div className="flex gap-3 pt-1">
                       <button
                         type="button"
@@ -273,15 +296,21 @@ export default function LogEntryPage() {
                   </div>
                 ) : (
                   <div className="flex items-start justify-between gap-3">
-                    <div>
-                      <p className="font-medium text-sm">
-                        {a.name} ({a.unit})
-                      </p>
-                      {a.description && (
-                        <p className="text-sm text-neutral-500">
-                          {a.description}
+                    <div className="flex items-start gap-2">
+                      <span
+                        className="h-3 w-3 rounded-full shrink-0 mt-1"
+                        style={{ backgroundColor: a.color }}
+                      />
+                      <div>
+                        <p className="font-medium text-sm">
+                          {a.name} ({a.unit})
                         </p>
-                      )}
+                        {a.description && (
+                          <p className="text-sm text-neutral-500">
+                            {a.description}
+                          </p>
+                        )}
+                      </div>
                     </div>
                     <div className="flex gap-3 shrink-0">
                       <button
@@ -339,6 +368,10 @@ export default function LogEntryPage() {
               placeholder="e.g. Standard push-ups, chest to floor"
               className="w-full border rounded-lg px-3 py-2"
             />
+          </div>
+          <div>
+            <label className="block text-sm font-medium mb-1">Color</label>
+            <ColorSwatchPicker value={newColor} onChange={setNewColor} />
           </div>
           <button
             type="button"

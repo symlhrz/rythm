@@ -3,6 +3,7 @@ export type Activity = {
   name: string;
   unit: string;
   description: string | null;
+  color: string;
   createdAt: string;
 };
 
@@ -28,6 +29,7 @@ export type DashboardActivity = {
   name: string;
   unit: string;
   description: string | null;
+  color: string;
   points: ChartPoint[];
   periodTotal: number;
   lastDoneDate: string | null;

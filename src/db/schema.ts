@@ -5,6 +5,7 @@ export const activities = pgTable("activities", {
   name: text("name").notNull(),
   unit: text("unit").notNull(), // e.g. "reps", "km", "minutes"
   description: text("description"),
+  color: text("color").notNull().default("#171717"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 

@@ -13,12 +13,17 @@ export async function GET() {
         name TEXT NOT NULL,
         unit TEXT NOT NULL,
         description TEXT,
+        color TEXT NOT NULL DEFAULT '#171717',
         created_at TIMESTAMP NOT NULL DEFAULT now()
       )
     `);
 
     await db.execute(sql`
       ALTER TABLE activities ADD COLUMN IF NOT EXISTS description TEXT
+    `);
+
+    await db.execute(sql`
+      ALTER TABLE activities ADD COLUMN IF NOT EXISTS color TEXT NOT NULL DEFAULT '#171717'
     `);
 
     await db.execute(sql`
