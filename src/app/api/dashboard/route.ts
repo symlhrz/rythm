@@ -110,6 +110,7 @@ export async function GET(req: Request) {
     });
 
     const periodTotal = points.reduce((sum, p) => sum + p.total, 0);
+    const periodCount = inRange.length;
 
     const lastEntry = activityEntries
       .slice()
@@ -123,6 +124,7 @@ export async function GET(req: Request) {
       color: activity.color,
       points,
       periodTotal,
+      periodCount,
       lastDoneDate: lastEntry ? lastEntry.date : null,
     });
   }
