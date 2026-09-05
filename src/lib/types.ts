@@ -2,6 +2,7 @@ export type Activity = {
   id: number;
   name: string;
   unit: string;
+  description: string | null;
   createdAt: string;
 };
 
@@ -24,6 +25,7 @@ export type DashboardActivity = {
   id: number;
   name: string;
   unit: string;
+  description: string | null;
   dailyTotals: DailyTotal[];
   weekTotal: number;
   lastDoneDate: string | null;

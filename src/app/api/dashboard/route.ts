@@ -41,6 +41,7 @@ export async function GET() {
       id: activity.id,
       name: activity.name,
       unit: activity.unit,
+      description: activity.description,
       dailyTotals,
       weekTotal,
       lastDoneDate: lastEntry ? lastEntry.date : null,

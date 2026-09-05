@@ -12,6 +12,7 @@ export async function POST(req: Request) {
   const body = await req.json();
   const name = (body.name ?? "").trim();
   const unit = (body.unit ?? "").trim();
+  const description = (body.description ?? "").trim();
 
   if (!name || !unit) {
     return NextResponse.json(
@@ -22,7 +23,7 @@ export async function POST(req: Request) {
 
   const [created] = await db
     .insert(activities)
-    .values({ name, unit })
+    .values({ name, unit, description: description || null })
     .returning();
 
   return NextResponse.json(created, { status: 201 });

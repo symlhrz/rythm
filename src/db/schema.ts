@@ -4,6 +4,7 @@ export const activities = pgTable("activities", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
   unit: text("unit").notNull(), // e.g. "reps", "km", "minutes"
+  description: text("description"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 

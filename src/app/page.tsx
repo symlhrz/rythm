@@ -60,6 +60,9 @@ export default function DashboardPage() {
           <div className="flex items-start justify-between">
             <div>
               <h2 className="font-semibold">{activity.name}</h2>
+              {activity.description && (
+                <p className="text-sm text-neutral-600">{activity.description}</p>
+              )}
               <p className="text-sm text-neutral-500">
                 Last done: {formatLastDone(activity.lastDoneDate)}
               </p>

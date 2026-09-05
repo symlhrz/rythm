@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import { db } from "@/db";
 import { sql } from "drizzle-orm";
 
+// Visit this URL once in your browser after deploying to create the
+// database tables. It's safe to visit more than once — it won't
+// overwrite or duplicate anything if the tables already exist.
 export async function GET() {
   try {
     await db.execute(sql`
@@ -9,8 +12,13 @@ export async function GET() {
         id SERIAL PRIMARY KEY,
         name TEXT NOT NULL,
         unit TEXT NOT NULL,
+        description TEXT,
         created_at TIMESTAMP NOT NULL DEFAULT now()
       )
+    `);
+
+    await db.execute(sql`
+      ALTER TABLE activities ADD COLUMN IF NOT EXISTS description TEXT
     `);
 
     await db.execute(sql`
