@@ -32,6 +32,7 @@ export type DashboardActivity = {
   color: string;
   points: ChartPoint[];
   periodTotal: number;
+  periodCount: number;
   lastDoneDate: string | null;
 };
 
