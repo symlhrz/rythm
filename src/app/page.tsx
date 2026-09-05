@@ -153,7 +153,9 @@ export default function DashboardPage() {
                   {activity.periodTotal} {activity.unit}
                 </p>
                 <p className="text-xs text-neutral-500">
-                  this {data.range}
+                  {activity.periodCount}{" "}
+                  {activity.periodCount === 1 ? "time" : "times"} this{" "}
+                  {data.range}
                 </p>
               </div>
             </div>
